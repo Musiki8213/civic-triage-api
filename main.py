@@ -11,7 +11,7 @@ app = FastAPI(title="CivicTriage API")
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000", "http://127.0.0.1:3000"],
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -19,6 +19,11 @@ app.add_middleware(
 
 pipeline = joblib.load("civicfix_model.joblib")
 db_complaints = []
+
+
+@app.get("/")
+def root():
+    return {"message": "CivicTriage API is live and running!"}
 
 
 class ComplaintInput(BaseModel):
